@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Register - CourseFlow{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-panel">
+        <p class="eyebrow">Start tracking</p>
+        <h1>Create account</h1>
+
+        <form method="POST" class="stack-form">
+            <div>
+                <label for="username" class="form-label">Username</label>
+                <input id="username" type="text" name="username" class="form-control" placeholder="At least 3 characters" minlength="3" required>
+            </div>
+
+            <div>
+                <label for="password" class="form-label">Password</label>
+                <input id="password" type="password" name="password" class="form-control" placeholder="At least 6 characters" minlength="6" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-person-plus"></i>
+                Register
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            Already have an account? <a href="/login">Login</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

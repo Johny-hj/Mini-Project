@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Add Course - CourseFlow{% endblock %}
+
+{% block content %}
+<section class="form-page">
+    <div class="form-panel">
+        <a href="/" class="back-link">
+            <i class="bi bi-arrow-left"></i>
+            Back to dashboard
+        </a>
+
+        <p class="eyebrow">New course</p>
+        <h1>Add a course</h1>
+
+        <div class="quick-picks">
+            <form action="/add/predefined/dsa" method="POST">
+                <button class="btn btn-outline-primary" type="submit">DSA</button>
+            </form>
+            <form action="/add/predefined/python" method="POST">
+                <button class="btn btn-outline-primary" type="submit">Python</button>
+            </form>
+            <form action="/add/predefined/sql" method="POST">
+                <button class="btn btn-outline-primary" type="submit">SQL</button>
+            </form>
+            <form action="/add/predefined/dbms" method="POST">
+                <button class="btn btn-outline-primary" type="submit">DBMS</button>
+            </form>
+        </div>
+
+        <form method="POST" class="stack-form">
+            <div>
+                <label for="title" class="form-label">Course name</label>
+                <input id="title" type="text" name="title" class="form-control" placeholder="Example: Python for Everybody" required autofocus>
+            </div>
+
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-plus-lg"></i>
+                Add Course
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

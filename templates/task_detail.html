@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ task.task_title }} - CourseFlow{% endblock %}
+
+{% block content %}
+<section class="study-hero">
+    <a href="/course/{{ course.id }}" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to {{ course.title }} plan
+    </a>
+
+    <div class="study-hero-row">
+        <div>
+            <p class="eyebrow">{{ course.title }} &middot; Concept {{ task.concept_number }}</p>
+            <h1>{{ task.task_title }}</h1>
+            <p>{{ task.concept.title }}</p>
+        </div>
+
+        <form action="/course/{{ course.id }}/task/{{ task.task_id }}/toggle" method="POST">
+            <input type="hidden" name="next" value="/course/{{ course.id }}/task/{{ task.task_id }}">
+            <button class="complete-button {% if is_completed %}is-complete{% endif %}" type="submit">
+                <span>
+                    {% if is_completed %}
+                        <i class="bi bi-check-lg"></i>
+                    {% endif %}
+                </span>
+                {% if is_completed %}Completed{% else %}Mark Complete{% endif %}
+            </button>
+        </form>
+    </div>
+</section>
+
+<section class="study-grid">
+    <article class="study-panel">
+        <h2>Read first</h2>
+        <ul class="study-list">
+            {% for item in task.read %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+
+    <article class="study-panel">
+        <h2>Remember</h2>
+        <div class="term-cloud">
+            {% for term in task.remember %}
+            <span>{{ term }}</span>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+
+<section class="practice-panel">
+    <div>
+        <p class="eyebrow">Practice</p>
+        <h2>Questions to solve before completing</h2>
+    </div>
+
+    <ol class="practice-list">
+        {% for question in task.practice %}
+        <li>{{ question }}</li>
+        {% endfor %}
+    </ol>
+</section>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CourseFlow{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Learning dashboard</p>
+        <h1>Track every course without losing the thread.</h1>
+    </div>
+    <a href="/add" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i>
+        Add Course
+    </a>
+</section>
+
+<section class="stats-grid" aria-label="Course progress summary">
+    <article class="stat-card">
+        <span>Total courses</span>
+        <strong>{{ stats.total }}</strong>
+    </article>
+    <article class="stat-card accent-teal">
+        <span>Average progress</span>
+        <strong>{{ stats.average_progress }}%</strong>
+    </article>
+    <article class="stat-card accent-amber">
+        <span>In progress</span>
+        <strong>{{ stats.active }}</strong>
+    </article>
+    <article class="stat-card accent-green">
+        <span>Completed</span>
+        <strong>{{ stats.completed }}</strong>
+    </article>
+</section>
+
+<section class="track-grid" aria-label="Beginner course roadmaps">
+    {% for track in recommended_tracks %}
+    <article class="track-card">
+        <div>
+            <span class="track-kicker">{{ track.concept_count }} concepts &middot; {{ track.task_count }} tasks</span>
+            <h2>{{ track.title }}</h2>
+            <p>{{ track.description }}</p>
+        </div>
+        {% if track.is_added %}
+            <span class="btn btn-outline-success disabled">
+                <i class="bi bi-check-circle"></i>
+                Added
+            </span>
+        {% else %}
+            <form action="/add/predefined/{{ track.slug }}" method="POST">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="bi bi-plus-circle"></i>
+                    Add Track
+                </button>
+            </form>
+        {% endif %}
+    </article>
+    {% endfor %}
+</section>
+
+<section class="toolbar">
+    <form class="row g-2 align-items-center" method="GET" action="/">
+        <div class="col-12 col-lg">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="search" name="q" value="{{ search_query }}" class="form-control" placeholder="Search courses">
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <select name="status" class="form-select">
+                {% for status in ['All', 'Not Started', 'In Progress', 'Completed'] %}
+                    <option value="{{ status }}" {% if status == status_filter %}selected{% endif %}>{{ status }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-auto d-flex gap-2">
+            <button class="btn btn-dark" type="submit">
+                <i class="bi bi-funnel"></i>
+                Filter
+            </button>
+            <a class="btn btn-outline-secondary" href="/">
+                <i class="bi bi-arrow-counterclockwise"></i>
+                Reset
+            </a>
+        </div>
+    </form>
+</section>
+
+{% if courses %}
+<section class="course-list">
+    {% for course in courses %}
+    <article class="course-card">
+        <div class="course-main">
+            <div>
+                <span class="status-pill status-{{ course.status|lower|replace(' ', '-') }}">{{ course.status }}</span>
+                <h2>{{ course.title }}</h2>
+            </div>
+            <strong class="progress-value">{{ course.progress }}%</strong>
+        </div>
+
+        <div class="progress app-progress" role="progressbar" aria-label="{{ course.title }} progress" aria-valuenow="{{ course.progress }}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: {{ course.progress }}%"></div>
+        </div>
+
+        <div class="course-actions">
+            {% if course.curriculum %}
+            <a class="btn btn-primary" href="/course/{{ course.id }}">
+                <i class="bi bi-list-check"></i>
+                Open Plan
+            </a>
+            <span class="task-count">{{ course.task_done }} / {{ course.task_total }} tasks</span>
+            {% else %}
+            <form action="/update/{{ course.id }}" method="POST" class="progress-form">
+                <label class="visually-hidden" for="progress-{{ course.id }}">Progress</label>
+                <input id="progress-{{ course.id }}" type="number" name="progress" value="{{ course.progress }}" class="form-control" min="0" max="100">
+                <button class="btn btn-success" type="submit">
+                    <i class="bi bi-check2"></i>
+                    Update
+                </button>
+            </form>
+            {% endif %}
+
+            <form action="/delete/{{ course.id }}" method="POST" onsubmit="return confirm('Delete this course?');">
+                <button class="btn btn-outline-danger" type="submit">
+                    <i class="bi bi-trash3"></i>
+                    Delete
+                </button>
+            </form>
+        </div>
+    </article>
+    {% endfor %}
+</section>
+{% else %}
+<section class="empty-state">
+    <i class="bi bi-journal-plus"></i>
+    <h2>No courses found</h2>
+    <p>Add a course or clear your filters to see your learning plan here.</p>
+    <a href="/add" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i>
+        Add Course
+    </a>
+</section>
+{% endif %}
+{% endblock %}

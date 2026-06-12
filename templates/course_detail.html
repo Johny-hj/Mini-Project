@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }} Plan - CourseFlow{% endblock %}
+
+{% block content %}
+<section class="course-hero">
+    <a href="/" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to dashboard
+    </a>
+
+    <div class="course-hero-row">
+        <div>
+            <p class="eyebrow">Beginner roadmap</p>
+            <h1>{{ curriculum.title }}</h1>
+            <p>{{ curriculum.description }}</p>
+        </div>
+        <div class="course-score">
+            <strong>{{ course.progress }}%</strong>
+            <span>{{ completed_tasks }} / {{ total_tasks }} tasks</span>
+        </div>
+    </div>
+
+    <div class="progress app-progress" role="progressbar" aria-label="{{ course.title }} progress" aria-valuenow="{{ course.progress }}" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: {{ course.progress }}%"></div>
+    </div>
+</section>
+
+<section class="concept-list">
+    {% for concept in concepts %}
+    <article class="concept-card">
+        <header class="concept-header">
+            <div>
+                <span class="concept-number">Concept {{ concept.number }}</span>
+                <h2>{{ concept.title }}</h2>
+            </div>
+            <span class="task-count">{{ concept.completed_count }} / {{ concept.tasks|length }} done</span>
+        </header>
+
+        <div class="task-list">
+            {% for task in concept.tasks %}
+            <form action="/course/{{ course.id }}/task/{{ task.id }}/toggle" method="POST" class="task-row">
+                <input type="hidden" name="next" value="/course/{{ course.id }}">
+                <button class="task-toggle {% if task.completed %}is-complete{% endif %}" type="submit" aria-label="Toggle task completion">
+                    {% if task.completed %}
+                        <i class="bi bi-check-lg"></i>
+                    {% endif %}
+                </button>
+                <a class="task-title {% if task.completed %}is-complete{% endif %}" href="{{ task.url }}">
+                    {{ task.title }}
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </form>
+            {% endfor %}
+        </div>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}
