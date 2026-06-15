@@ -7,6 +7,7 @@ from sqlalchemy import inspect, text
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__)
 
 database_url = os.environ.get('DATABASE_URL', 'sqlite:///database.db')
@@ -820,6 +821,25 @@ def login():
         flash("Invalid Username or Password")
 
     return render_template('login.html')
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+
+    if request.method == 'POST':
+        username = request.form['username']
+        new_password = request.form['new_password']
+
+        user = User.query.filter_by(username=username).first()
+
+        if user:
+            user.password = generate_password_hash(new_password)
+            db.session.commit()
+
+            flash('Password reset successful. Please login.', 'success')
+            return redirect('/login')
+
+        flash('Username not found!', 'danger')
+
+    return render_template('forgot_password.html')
 
 # Logout
 @app.route('/logout')

@@ -634,3 +634,291 @@ body {
         width: 100%;
     }
 }
+
+body {
+    background:
+        radial-gradient(circle at top left, rgba(37,99,235,0.15), transparent 40%),
+        radial-gradient(circle at top right, rgba(15,118,110,0.15), transparent 40%),
+        linear-gradient(135deg, #eef6ff 0%, #f8fafc 50%, #edfdf9 100%);
+}
+
+/* Navbar */
+.app-nav {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+
+/* Logo */
+.navbar-brand {
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+
+/* Gradient Headings */
+.page-heading h1,
+.course-hero h1,
+.study-hero h1,
+.auth-panel h1,
+.form-panel h1 {
+    background: linear-gradient(135deg, #2563eb, #0f766e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+}
+
+/* Glass Cards */
+.stat-card,
+.track-card,
+.course-card,
+.course-hero,
+.study-hero,
+.study-panel,
+.practice-panel,
+.concept-card,
+.auth-panel,
+.form-panel,
+.empty-state,
+.toolbar {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    transition: all .35s ease;
+}
+
+/* Hover Effects */
+.stat-card:hover,
+.track-card:hover,
+.course-card:hover,
+.concept-card:hover,
+.study-panel:hover,
+.practice-panel:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(37,99,235,0.15);
+}
+
+/* Statistics */
+.stat-card {
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #06b6d4,
+        #10b981
+    );
+}
+
+.stat-card strong {
+    font-size: 2.4rem;
+    color: #2563eb;
+    font-weight: 900;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 12px;
+    transition: all .3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37,99,235,0.35);
+}
+
+/* Progress Bar */
+.app-progress {
+    height: 14px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #e2e8f0;
+}
+
+.app-progress .progress-bar {
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #06b6d4,
+        #10b981
+    );
+}
+
+/* Course Cards */
+.course-card {
+    overflow: hidden;
+    position: relative;
+}
+
+.course-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        #2563eb,
+        #06b6d4
+    );
+}
+
+/* Task Cards */
+.task-title {
+    border-radius: 12px;
+    transition: all .3s ease;
+}
+
+.task-title:hover {
+    transform: translateX(6px);
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+.task-toggle {
+    transition: all .3s ease;
+}
+
+.task-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Completion Button */
+.complete-button {
+    border-radius: 12px;
+    transition: all .3s ease;
+}
+
+.complete-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Status Pills */
+.status-pill {
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(0,0,0,.05);
+}
+
+/* Term Tags */
+.term-cloud span {
+    transition: all .3s ease;
+}
+
+.term-cloud span:hover {
+    transform: scale(1.05);
+    background: #2563eb;
+    color: white;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    border-radius: 12px;
+    transition: all .3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 .25rem rgba(37,99,235,.15);
+}
+
+/* Floating Hero Animation */
+@keyframes floating {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.course-hero,
+.study-hero {
+    animation: floating 5s ease-in-out infinite;
+}
+
+/* Smooth Fade */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.course-card,
+.track-card,
+.stat-card,
+.concept-card {
+    animation: fadeIn .6s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        #2563eb,
+        #06b6d4
+    );
+    border-radius: 20px;
+}
+
+/* Mobile Improvements */
+@media (max-width: 768px) {
+    .course-card,
+    .study-panel,
+    .practice-panel,
+    .concept-card {
+        border-radius: 14px;
+    }
+
+    .stat-card strong {
+        font-size: 2rem;
+    }
+
+    .page-heading h1,
+    .course-hero h1,
+    .study-hero h1 {
+        font-size: 2rem;
+    }
+}
